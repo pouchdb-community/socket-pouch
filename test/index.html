@@ -7,7 +7,12 @@
 </head>
 <body>
 <div id="mocha"></div>
-<script src="./bind-polyfill.js"></script>
+<script>
+  if (/PhantomJS/.test(window.navigator.userAgent)) {
+    // phantomjs is old as hell
+    document.write('<script src="../node_modules/es5-shim/es5-shim.js"></' + 'script>');
+  }
+</script>
 <script src="../node_modules/mocha/mocha.js"></script>
 <script src="../node_modules/chai/chai.js"></script>
 <script>
