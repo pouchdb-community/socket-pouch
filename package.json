@@ -70,6 +70,9 @@
   "browser": {
     "./lib/shared/buffer.js": "./lib/shared/buffer-browser.js",
     "./lib/shared/cloneBinaryObject.js": "./lib/shared/cloneBinaryObject-browser.js",
-    "./lib/shared/isBinaryObject.js": "./lib/shared/isBinaryObject-browser.js"
+    "./lib/shared/isBinaryObject.js": "./lib/shared/isBinaryObject-browser.js",
+    "./lib/client/base64StringToBlobOrBuffer.js": "./lib/client/base64StringToBlobOrBuffer-browser.js",
+    "./lib/client/binaryStringToBlobOrBuffer.js": "./lib/client/binaryStringToBlobOrBuffer-browser.js",
+    "./lib/client/readAsBinaryString.js": "./lib/client/readAsBinaryString-browser.js"
   }
 }
