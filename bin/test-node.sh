@@ -2,8 +2,6 @@
 
 : ${TIMEOUT:=50000}
 : ${REPORTER:="spec"}
-: ${GREP:="3955|closure"}
-: ${INVERT:=1}
 
 node ./bin/dev-server.js &
 export DEV_SERVER_PID=$!
@@ -19,7 +17,7 @@ TESTS=$(ls node_modules/pouchdb/tests/integration/test*js | \
   grep -v defaults | \
   grep -v issue915 )
 
-if [ $INVERT ]; then
+if [ $INVERT == '1' ]; then
   INVERT_ARG='--invert'
 else
   INVERT_ARG=''

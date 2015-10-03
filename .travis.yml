@@ -25,15 +25,8 @@ after_failure:
 
 env:
   matrix:
-  - COMMAND=test
+  - GREP='3955|closure' INVERT=1 COMMAND=test
   - CLIENT=selenium:firefox COMMAND=test
-  - COMMAND=coverage
-
-matrix:
-  allow_failures:
-  - env: COMMAND=coverage
-  - env: CLIENT=selenium:phantomjs COMMAND=test
-  fast_finish: true
 
 branches:
   only:
