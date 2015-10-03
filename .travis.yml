@@ -27,7 +27,6 @@ env:
   matrix:
   - COMMAND=test
   - CLIENT=selenium:firefox COMMAND=test
-  - CLIENT=selenium:phantomjs COMMAND=test
   - COMMAND=coverage
 
 matrix:
