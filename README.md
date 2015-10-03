@@ -1,30 +1,16 @@
-SocketPouch (Beta)
+SocketPouch (Beta) [![Build Status](https://travis-ci.org/nolanlawson/socket-pouch.svg)](https://travis-ci.org/nolanlawson/socket-pouch)
 =====
 
-[![Build Status](https://travis-ci.org/nolanlawson/socket-pouch.svg)](https://travis-ci.org/nolanlawson/socket-pouch)
+SocketPouch a custom PouchDB adapter that proxies all PouchDB API calls to another PouchDB running on the server in Node.js. The communication mechanism is [Engine.io](https://github.com/Automattic/engine.io), the famous core of [Socket.io](http://socket.io/).
 
-Plugin to allow PouchDB and CouchDB to sync over WebSockets, using [Engine.io](https://github.com/Automattic/engine.io).
-
-Introduction
----
-
-Normally PouchDB and CouchDB replicate using the [CouchDB replication protocol](http://www.replication.io/), which runs over HTTP/HTTPS. This protocol can be quite slow, because it's [very chatty](https://issues.apache.org/jira/browse/COUCHDB-2310).
-
-To speed up replication, SocketPouch implements this protocol over [WebSockets](https://issues.apache.org/jira/browse/COUCHDB-2310), falling back to normal HTTP long-polling for browsers that don't support WebSockets. This is accomplished using [Engine.io](https://github.com/Automattic/engine.io), the famous core of [Socket.io](http://socket.io/).
+This means that instead of syncing over HTTP, SocketPouch syncs over WebSockets. Thanks to Engine.io, it falls back to XHR polling in browsers that don't support WebSockets.
 
 SocketPouch has two parts:
 
 * **A Node.js server**, which can create local PouchDBs or proxy to a remote CouchDB.
 * **A JavaScript client**, which can run in Node.js or the browser.
 
-Beta warning
----
-
-This plugin is still pretty experimental (hence the `<1.0.0` version), but you are encouraged to play with it. Note that it currently requires [a special branch of PouchDB](https://github.com/pouchdb/pouchdb/tree/branch-for-socket-pouch) because I need some pull requests to get merged in order for it to work. Hopefully it should be ready in time for PouchDB 3.5.0.
-
-The API may substantially change before 1.0.0. I'd really like to get authentication right, but I haven't figured out yet how best to model it. Suggestions are welcome. :)
-
-Currently SocketPouch is passing [the full PouchDB test suite](https://travis-ci.org/nolanlawson/socket-pouch).
+SocketPouch passes [the full PouchDB test suite](https://travis-ci.org/nolanlawson/socket-pouch). It requires PouchDB 5.0.0+.
 
 Usage
 ---
@@ -219,10 +205,9 @@ So who knows - maybe WebRTC or BLE or p2p Wifi could be up next.
 
 Building
 ----
+
     npm install
     npm run build
-
-Your plugin is now located at `dist/pouchdb.mypluginname.js` and `dist/pouchdb.mypluginname.min.js` and is ready for distribution.
 
 Testing
 ----
