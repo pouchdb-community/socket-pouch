@@ -10,6 +10,7 @@
 <script src="./bind-polyfill.js"></script>
 <script src="../node_modules/mocha/mocha.js"></script>
 <script src="../node_modules/chai/chai.js"></script>
+<script src="../node_modules/chai-as-promised/lib/chai-as-promised.js"></script>
 <script>
   mocha.setup({
     timeout:100000,
@@ -17,7 +18,6 @@
   });
   var should = chai.should();
 </script>
-<script src='../node_modules/pouchdb/dist/pouchdb.js'></script>
 <script src="./test-bundle.js"></script>
 <script src='../node_modules/pouchdb/tests/integration/utils.js'></script>
 <script src='../node_modules/pouchdb/tests/integration/test.aa.setup.js'></script>
@@ -31,7 +31,8 @@
 <script src='../node_modules/pouchdb/tests/integration/test.revs_diff.js'></script>
 <script src='../node_modules/pouchdb/tests/integration/test.replication.js'></script>
 <script src='../node_modules/pouchdb/tests/integration/test.sync.js'></script>
-<script src='../node_modules/pouchdb/tests/integration/test.views.js'></script>
+<script src='../node_modules/pouchdb/tests/integration/test.sync_events.js'></script>
+<script src='../node_modules/pouchdb/tests/integration/test.retry.js'></script>
 <script src='../node_modules/pouchdb/tests/integration/test.taskqueue.js'></script>
 <script src='../node_modules/pouchdb/tests/integration/test.design_docs.js'></script>
 <script src='../node_modules/pouchdb/tests/integration/browser.info.js'></script>
@@ -46,8 +47,14 @@
 <script src='../node_modules/pouchdb/tests/integration/test.uuids.js'></script>
 <script src='../node_modules/pouchdb/tests/integration/test.slash_id.js'></script>
 <script src='../node_modules/pouchdb/tests/integration/test.reserved.js'></script>
-<!-- TODO: engine.io apparently doesn't work in a web worker -->
+<!-- TODO: engine.io apparently doesn't work in a web worker? -->
 <!--<script src='../node_modules/pouchdb/tests/integration/browser.worker.js'></script>-->
+<!-- Migration tests don't make sense -->
+<!--<script src='../node_modules/pouchdb/tests/integration/browser.migration.js'></script>-->
+<!-- explicitly add in the mapreduce tests -->
+<script src='../node_modules/pouchdb/tests/mapreduce/test.mapreduce.js'></script>
+<script src='../node_modules/pouchdb/tests/mapreduce/test.views.js'></script>
+<script src='../node_modules/pouchdb/tests/mapreduce/test.persisted.js'></script>
 <script type="text/javascript" src="./webrunner.js"></script>
 </body>
 </html>

@@ -2,6 +2,8 @@
 
 : ${TIMEOUT:=50000}
 : ${REPORTER:="spec"}
+: ${GREP:="closure"}
+: ${INVERT:=1}
 
 node ./bin/dev-server.js &
 export DEV_SERVER_PID=$!
@@ -17,11 +19,18 @@ TESTS=$(ls node_modules/pouchdb/tests/integration/test*js | \
   grep -v defaults | \
   grep -v issue915 )
 
+if [ $INVERT ]; then
+  INVERT_ARG='--invert'
+else
+  INVERT_ARG=''
+fi
+
 mocha \
   --reporter=$REPORTER \
   --timeout $TIMEOUT \
   --require=./test/node.setup.js \
   --grep=$GREP \
+  $INVERT_ARG \
   $TESTS
 
 EXIT_STATUS=$?
