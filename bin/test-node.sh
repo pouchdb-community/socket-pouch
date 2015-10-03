@@ -2,7 +2,7 @@
 
 : ${TIMEOUT:=50000}
 : ${REPORTER:="spec"}
-: ${GREP:="closure"}
+: ${GREP:="3955|closure"}
 : ${INVERT:=1}
 
 node ./bin/dev-server.js &
