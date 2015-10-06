@@ -1,6 +1,11 @@
 SocketPouch (Beta) [![Build Status](https://travis-ci.org/nolanlawson/socket-pouch.svg)](https://travis-ci.org/nolanlawson/socket-pouch)
 =====
 
+```js
+// This pouch is powered by web sockets!
+var db = new PouchDB('mydb', {adapter: 'socket', url: 'ws://localhost:80'});
+```
+
 SocketPouch a custom PouchDB adapter that proxies all PouchDB API calls to another PouchDB running on the server in Node.js. The communication mechanism is [Engine.io](https://github.com/Automattic/engine.io), the famous core of [Socket.io](http://socket.io/).
 
 This means that instead of syncing over HTTP, SocketPouch syncs over WebSockets. Thanks to Engine.io, it falls back to XHR polling in browsers that don't support WebSockets.
@@ -41,9 +46,8 @@ Then include it in your HTML, after PouchDB:
 Then you can create a socket-powered PouchDB using:
 
 ```js
-var db = new PouchDB({
+var db = new PouchDB('mydb', {
   adapter: 'socket',
-  name: 'mydb',
   url: 'ws://localhost:80'
 });
 ```
