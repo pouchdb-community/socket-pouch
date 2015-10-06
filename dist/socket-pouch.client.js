@@ -243,6 +243,20 @@ function SocketPouch(opts, callback) {
       callback(err);
     });
 
+    function handleUncaughtError(content) {
+      try {
+        api.emit('error', content);
+      } catch (err) {
+        // TODO: it's weird that adapters should have to handle this themselves
+        console.error(
+          'The user\'s map/reduce function threw an uncaught error.\n' +
+          'You can debug this error by doing:\n' +
+          'myDatabase.on(\'error\', function (err) { debugger; });\n' +
+          'Please double-check your map/reduce function.');
+        console.error(content);
+      }
+    }
+
     function receiveMessage(res) {
       var split = utils.parseMessage(res, 3);
       var messageId = split[0];
@@ -250,17 +264,7 @@ function SocketPouch(opts, callback) {
       var content = JSON.parse(split[2]);
 
       if (messageType === '4') { // unhandled error
-        try {
-          api.emit('error', content);
-        } catch (err) {
-          // TODO: it's weird that adapters should have to handle this themselves
-          console.error(
-            'The user\'s map/reduce function threw an uncaught error.\n' +
-            'You can debug this error by doing:\n' +
-            'myDatabase.on(\'error\', function (err) { debugger; });\n' +
-            'Please double-check your map/reduce function.');
-          console.error(content);
-        }
+        handleUncaughtError(content);
         return;
       }
 
@@ -331,6 +335,7 @@ function SocketPouch(opts, callback) {
         blobToDeliver = blobUtil.createBlob([blob], {type: msg.contentType});
       } else {
         blobToDeliver = blob;
+        blob.type = msg.contentType; // non-standard, but we do it for the tests
       }
 
       msg.cb(null, blobToDeliver);
