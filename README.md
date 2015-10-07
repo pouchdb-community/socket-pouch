@@ -201,11 +201,9 @@ Normally it sends JSON text data, but in the case of attachments, binary data is
 
 Unfortuantely, not at the moment.
 
-#### How does it work?
+#### How is it implemented?
 
-This is a custom PouchDB adapter. Currently the only known PouchDB adapters were the IndexedDB, WebSQL, LevelDB, and HTTP (Couch) adapters, as well as a quasi-adapter written for [pouchdb-replication-stream](https://github.com/nolanlawson/pouchdb-replication-stream). But I'm trying to make it easier to write arbitrary adapters, and SocketPouch is part of that effort.
-
-So who knows - maybe WebRTC or BLE or p2p Wifi could be up next.
+This is a custom PouchDB adapter. Other examples of PouchDB adapters include the built-in IndexedDB, WebSQL, LevelDB, and HTTP (Couch) adapters, as well as a partial adapter written for [pouchdb-replication-stream](https://github.com/nolanlawson/pouchdb-replication-stream) and [worker-pouch](https://github.com/nolanlawson/worker-pouch), which is a fork of this repo.
 
 Building
 ----
