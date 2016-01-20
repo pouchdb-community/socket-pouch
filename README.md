@@ -82,7 +82,7 @@ socketPouchServer.listen(80, {}, function () {
 * **options**: (optional) options object
   * **remoteUrl**: tells SocketPouch to act as a proxy for a remote CouchDB at the given URL (rather than creating local PouchDB databases)
   * **pouchCreator**: alternatively, you can supply a custom function that takes a string and returns any PouchDB object however you like. (See examples below.) 
-  * **socketOptions**: (optional) options passed passed verbatim to Engine.io. See [their documentation](https://github.com/Automattic/engine.io/#methods) for details.
+  * **socketOptions**: (optional) options passed verbatim to Engine.io. See [their documentation](https://github.com/Automattic/engine.io/#methods) for details.
 * **callback**: (optional) called when the server has started
 
 Create a server which creates local PouchDBs, named by the user and placed in the current directory:
