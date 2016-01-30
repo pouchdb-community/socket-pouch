@@ -7,7 +7,7 @@ node_js:
   - "stable"
 sudo: false
 addons:
-  firefox: "44.0"
+  firefox: "41.0.1"
 script: npm run $COMMAND
 before_script:
   - "export DISPLAY=:99.0"
@@ -20,7 +20,7 @@ before_script:
 env:
   matrix:
   - COMMAND=test
-  - CLIENT=selenium:firefox:44.0 COMMAND=test
+  - CLIENT=selenium:firefox:41.0.1 COMMAND=test
 
 branches:
   only:
