@@ -9,15 +9,11 @@ export DEV_SERVER_PID=$!
 sleep 10
 
 # TODO: this fixes a weird test in test.views.js
+./node_modules/.bin/rimraf tmp
 ./node_modules/.bin/mkdirp tmp
 
 # skip migration and defaults tests
-TESTS=$(ls node_modules/pouchdb/tests/integration/test*js | \
-  grep -v migration | \
-  grep -v defaults | \
-  grep -v issue915 )
-
-if [ $INVERT == '1' ]; then
+if [[ $INVERT == '1' ]]; then
   INVERT_ARG='--invert'
 else
   INVERT_ARG=''
@@ -29,7 +25,7 @@ mocha \
   --require=./test/node.setup.js \
   --grep=$GREP \
   $INVERT_ARG \
-  $TESTS
+  test/pouchdb/{integration,mapreduce}/*
 
 EXIT_STATUS=$?
 if [[ ! -z $DEV_SERVER_PID ]]; then

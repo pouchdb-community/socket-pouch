@@ -307,7 +307,7 @@ testUtils.promisify = function (fun, context) {
 
 var testDir;
 if (typeof module !== 'undefined' && module.exports) {
-  global.PouchDB = require('../../lib');
+  /*global.PouchDB = require('pouchdb');
   if (process.env.LEVEL_ADAPTER || process.env.LEVEL_PREFIX) {
     var defaults = {};
 
@@ -323,7 +323,7 @@ if (typeof module !== 'undefined' && module.exports) {
     global.PouchDB = global.PouchDB.defaults(defaults);
   } else if (process.env.AUTO_COMPACTION) {
     global.PouchDB = global.PouchDB.defaults({auto_compaction: true});
-  }
+  }*/
   if (typeof process !== 'undefined') {
     testDir = process.env.TESTS_DIR ? process.env.TESTS_DIR : './tmp';
     testDir = testDir.slice(-1) === '/' ? testDir : testDir + '/';
