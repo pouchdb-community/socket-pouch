@@ -74,5 +74,6 @@
     "./lib/client/base64StringToBlobOrBuffer.js": "./lib/client/base64StringToBlobOrBuffer-browser.js",
     "./lib/client/binaryStringToBlobOrBuffer.js": "./lib/client/binaryStringToBlobOrBuffer-browser.js",
     "./lib/client/readAsBinaryString.js": "./lib/client/readAsBinaryString-browser.js"
-  }
+  },
+  "files": ["lib", "client", "server", "dist"]
 }
