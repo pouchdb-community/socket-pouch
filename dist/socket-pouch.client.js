@@ -441,6 +441,17 @@ function SocketPouch(opts, callback) {
     });
   });
 
+  // hacky code necessary due to implicit breaking change in
+  // https://github.com/pouchdb/pouchdb/commits/0ddeae6b
+  api._get = function (id, opts, callback) {
+    api.get(id, opts, function (err, doc) {
+      if (err) {
+        return callback(err);
+      }
+      callback(null, {doc: doc});
+    });
+  };
+
   api.remove =
     adapterFun('remove', function (docOrId, optsOrRev, opts, callback) {
       var doc;
@@ -733,7 +744,7 @@ if (typeof window !== 'undefined' && window.PouchDB) {
 }
 
 }).call(this,_dereq_('_process'))
-},{"../shared/buffer":11,"../shared/errors":13,"../shared/isBinaryObject":14,"../shared/utils":17,"./../shared/uuid":18,"./base64":3,"./readAsBinaryString":9,"./utils":10,"_process":74,"blob-util":22,"debug":27,"engine.io-client":29,"pouchdb/extras/promise":70}],9:[function(_dereq_,module,exports){
+},{"../shared/buffer":11,"../shared/errors":13,"../shared/isBinaryObject":14,"../shared/utils":17,"./../shared/uuid":18,"./base64":3,"./readAsBinaryString":9,"./utils":10,"_process":69,"blob-util":22,"debug":27,"engine.io-client":29,"pouchdb/extras/promise":66}],9:[function(_dereq_,module,exports){
 'use strict';
 
 var arrayBufferToBinaryString = _dereq_('./arrayBufferToBinaryString');
@@ -873,7 +884,7 @@ exports.adapterFun = function adapterFun(name, callback) {
   }));
 };
 }).call(this,_dereq_('_process'))
-},{"../shared/utils":17,"./base64StringToBlobOrBuffer":4,"_process":74,"debug":27}],11:[function(_dereq_,module,exports){
+},{"../shared/utils":17,"./base64StringToBlobOrBuffer":4,"_process":69,"debug":27}],11:[function(_dereq_,module,exports){
 // hey guess what, we don't need this in the browser
 module.exports = {};
 },{}],12:[function(_dereq_,module,exports){
@@ -1167,7 +1178,7 @@ exports.generateErrorFromResponse = function (res) {
   return error;
 };
 
-},{"inherits":50}],14:[function(_dereq_,module,exports){
+},{"inherits":45}],14:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = function isBinaryObject(object) {
@@ -1363,7 +1374,7 @@ exports.readAsBinaryString = binUtil.readAsBinaryString;
 exports.binaryStringToArrayBuffer = binUtil.binaryStringToArrayBuffer;
 exports.arrayBufferToBinaryString = binUtil.arrayBufferToBinaryString;
 }).call(this,_dereq_('_process'))
-},{"./buffer":11,"./parse-message":15,"./pouchdb-clone":16,"_process":74,"inherits":50,"pouchdb-binary-util":56,"pouchdb/extras/promise":70}],18:[function(_dereq_,module,exports){
+},{"./buffer":11,"./parse-message":15,"./pouchdb-clone":16,"_process":69,"inherits":45,"pouchdb-binary-util":65,"pouchdb/extras/promise":66}],18:[function(_dereq_,module,exports){
 "use strict";
 
 // BEGIN Math.uuid.js
@@ -1575,7 +1586,7 @@ module.exports = function(arraybuffer, start, end) {
 
 /* jshint -W079 */
 var Blob = _dereq_('blob');
-var Promise = _dereq_('pouchdb-promise');
+var Promise = _dereq_('native-or-lie');
 
 //
 // PRIVATE
@@ -1881,7 +1892,7 @@ module.exports = {
   blobToArrayBuffer  : blobToArrayBuffer
 };
 
-},{"blob":23,"pouchdb-promise":57}],23:[function(_dereq_,module,exports){
+},{"blob":23,"native-or-lie":61}],23:[function(_dereq_,module,exports){
 (function (global){
 /**
  * Create a blob builder even when vendor prefixes exist
@@ -2526,7 +2537,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":52}],29:[function(_dereq_,module,exports){
+},{"ms":60}],29:[function(_dereq_,module,exports){
 
 module.exports =  _dereq_('./lib/');
 
@@ -3274,7 +3285,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./transport":32,"./transports":33,"component-emitter":25,"debug":27,"engine.io-parser":39,"indexof":49,"parsejson":53,"parseqs":54,"parseuri":55}],32:[function(_dereq_,module,exports){
+},{"./transport":32,"./transports":33,"component-emitter":25,"debug":27,"engine.io-parser":39,"indexof":44,"parsejson":62,"parseqs":63,"parseuri":64}],32:[function(_dereq_,module,exports){
 /**
  * Module dependencies.
  */
@@ -4395,7 +4406,7 @@ Polling.prototype.uri = function(){
   return schema + '://' + (ipv6 ? '[' + this.hostname + ']' : this.hostname) + port + this.path + query;
 };
 
-},{"../transport":32,"component-inherit":26,"debug":27,"engine.io-parser":39,"parseqs":54,"xmlhttprequest-ssl":38,"yeast":76}],37:[function(_dereq_,module,exports){
+},{"../transport":32,"component-inherit":26,"debug":27,"engine.io-parser":39,"parseqs":63,"xmlhttprequest-ssl":38,"yeast":71}],37:[function(_dereq_,module,exports){
 (function (global){
 /**
  * Module dependencies.
@@ -4687,7 +4698,7 @@ WS.prototype.check = function(){
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../transport":32,"component-inherit":26,"debug":27,"engine.io-parser":39,"parseqs":54,"ws":24,"yeast":76}],38:[function(_dereq_,module,exports){
+},{"../transport":32,"component-inherit":26,"debug":27,"engine.io-parser":39,"parseqs":63,"ws":24,"yeast":71}],38:[function(_dereq_,module,exports){
 // browser shim for xmlhttprequest module
 var hasCORS = _dereq_('has-cors');
 
@@ -5323,7 +5334,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./keys":40,"after":19,"arraybuffer.slice":20,"base64-arraybuffer":21,"blob":23,"has-binary":41,"utf8":75}],40:[function(_dereq_,module,exports){
+},{"./keys":40,"after":19,"arraybuffer.slice":20,"base64-arraybuffer":21,"blob":23,"has-binary":41,"utf8":70}],40:[function(_dereq_,module,exports){
 
 /**
  * Gets the keys for an object.
@@ -5406,7 +5417,7 @@ function hasBinary(data) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"isarray":51}],42:[function(_dereq_,module,exports){
+},{"isarray":46}],42:[function(_dereq_,module,exports){
 
 /**
  * Module exports.
@@ -5426,182 +5437,79 @@ try {
 }
 
 },{}],43:[function(_dereq_,module,exports){
+(function (global){
 'use strict';
-var types = [
-  _dereq_('./nextTick'),
-  _dereq_('./mutation.js'),
-  _dereq_('./messageChannel'),
-  _dereq_('./stateChange'),
-  _dereq_('./timeout')
-];
-var draining;
-var currentQueue;
-var queueIndex = -1;
-var queue = [];
-var scheduled = false;
-function cleanUpNextTick() {
-  draining = false;
-  if (currentQueue && currentQueue.length) {
-    queue = currentQueue.concat(queue);
+var Mutation = global.MutationObserver || global.WebKitMutationObserver;
+
+var scheduleDrain;
+
+{
+  if (Mutation) {
+    var called = 0;
+    var observer = new Mutation(nextTick);
+    var element = global.document.createTextNode('');
+    observer.observe(element, {
+      characterData: true
+    });
+    scheduleDrain = function () {
+      element.data = (called = ++called % 2);
+    };
+  } else if (!global.setImmediate && typeof global.MessageChannel !== 'undefined') {
+    var channel = new global.MessageChannel();
+    channel.port1.onmessage = nextTick;
+    scheduleDrain = function () {
+      channel.port2.postMessage(0);
+    };
+  } else if ('document' in global && 'onreadystatechange' in global.document.createElement('script')) {
+    scheduleDrain = function () {
+
+      // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+      // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+      var scriptEl = global.document.createElement('script');
+      scriptEl.onreadystatechange = function () {
+        nextTick();
+
+        scriptEl.onreadystatechange = null;
+        scriptEl.parentNode.removeChild(scriptEl);
+        scriptEl = null;
+      };
+      global.document.documentElement.appendChild(scriptEl);
+    };
   } else {
-    queueIndex = -1;
-  }
-  if (queue.length) {
-    nextTick();
+    scheduleDrain = function () {
+      setTimeout(nextTick, 0);
+    };
   }
 }
 
+var draining;
+var queue = [];
 //named nextTick for less confusing stack traces
 function nextTick() {
-  scheduled = false;
   draining = true;
+  var i, oldQueue;
   var len = queue.length;
-  var timeout = setTimeout(cleanUpNextTick);
   while (len) {
-    currentQueue = queue;
+    oldQueue = queue;
     queue = [];
-    while (++queueIndex < len) {
-      currentQueue[queueIndex].run();
+    i = -1;
+    while (++i < len) {
+      oldQueue[i]();
     }
-    queueIndex = -1;
     len = queue.length;
   }
-  queueIndex = -1;
   draining = false;
-  clearTimeout(timeout);
 }
-var scheduleDrain;
-var i = -1;
-var len = types.length;
-while (++i < len) {
-  if (types[i] && types[i].test && types[i].test()) {
-    scheduleDrain = types[i].install(nextTick);
-    break;
-  }
-}
-// v8 likes predictible objects
-function Item(fun, array) {
-  this.fun = fun;
-  this.array = array;
-}
-Item.prototype.run = function () {
-  this.fun.apply(null, this.array);
-};
+
 module.exports = immediate;
 function immediate(task) {
-  var args = new Array(arguments.length - 1);
-  if (arguments.length > 1) {
-    for (var i = 1; i < arguments.length; i++) {
-      args[i - 1] = arguments[i];
-    }
-  }
-  queue.push(new Item(task, args));
-  if (!scheduled && !draining) {
-    scheduled = true;
+  if (queue.push(task) === 1 && !draining) {
     scheduleDrain();
   }
 }
 
-},{"./messageChannel":44,"./mutation.js":45,"./nextTick":46,"./stateChange":47,"./timeout":48}],44:[function(_dereq_,module,exports){
-(function (global){
-'use strict';
-
-exports.test = function () {
-  if (global.setImmediate) {
-    // we can only get here in IE10
-    // which doesn't handel postMessage well
-    return false;
-  }
-  return typeof global.MessageChannel !== 'undefined';
-};
-
-exports.install = function (func) {
-  var channel = new global.MessageChannel();
-  channel.port1.onmessage = func;
-  return function () {
-    channel.port2.postMessage(0);
-  };
-};
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],45:[function(_dereq_,module,exports){
-(function (global){
-'use strict';
-//based off rsvp https://github.com/tildeio/rsvp.js
-//license https://github.com/tildeio/rsvp.js/blob/master/LICENSE
-//https://github.com/tildeio/rsvp.js/blob/master/lib/rsvp/asap.js
-
-var Mutation = global.MutationObserver || global.WebKitMutationObserver;
-
-exports.test = function () {
-  return Mutation;
-};
-
-exports.install = function (handle) {
-  var called = 0;
-  var observer = new Mutation(handle);
-  var element = global.document.createTextNode('');
-  observer.observe(element, {
-    characterData: true
-  });
-  return function () {
-    element.data = (called = ++called % 2);
-  };
-};
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],46:[function(_dereq_,module,exports){
-(function (process){
-'use strict';
-exports.test = function () {
-  // Don't get fooled by e.g. browserify environments.
-  return (typeof process !== 'undefined') && !process.browser;
-};
-
-exports.install = function (func) {
-  return function () {
-    process.nextTick(func);
-  };
-};
-
-}).call(this,_dereq_('_process'))
-},{"_process":74}],47:[function(_dereq_,module,exports){
-(function (global){
-'use strict';
-
-exports.test = function () {
-  return 'document' in global && 'onreadystatechange' in global.document.createElement('script');
-};
-
-exports.install = function (handle) {
-  return function () {
-
-    // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-    // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
-    var scriptEl = global.document.createElement('script');
-    scriptEl.onreadystatechange = function () {
-      handle();
-
-      scriptEl.onreadystatechange = null;
-      scriptEl.parentNode.removeChild(scriptEl);
-      scriptEl = null;
-    };
-    global.document.documentElement.appendChild(scriptEl);
-
-    return handle;
-  };
-};
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],48:[function(_dereq_,module,exports){
-'use strict';
-exports.test = function () {
-  return true;
-};
-
-exports.install = function (t) {
-  return function () {
-    setTimeout(t, 0);
-  };
-};
-},{}],49:[function(_dereq_,module,exports){
+},{}],44:[function(_dereq_,module,exports){
 
 var indexOf = [].indexOf;
 
@@ -5612,7 +5520,7 @@ module.exports = function(arr, obj){
   }
   return -1;
 };
-},{}],50:[function(_dereq_,module,exports){
+},{}],45:[function(_dereq_,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -5637,12 +5545,357 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],51:[function(_dereq_,module,exports){
+},{}],46:[function(_dereq_,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],52:[function(_dereq_,module,exports){
+},{}],47:[function(_dereq_,module,exports){
+'use strict';
+
+module.exports = INTERNAL;
+
+function INTERNAL() {}
+},{}],48:[function(_dereq_,module,exports){
+'use strict';
+var Promise = _dereq_('./promise');
+var reject = _dereq_('./reject');
+var resolve = _dereq_('./resolve');
+var INTERNAL = _dereq_('./INTERNAL');
+var handlers = _dereq_('./handlers');
+module.exports = all;
+function all(iterable) {
+  if (Object.prototype.toString.call(iterable) !== '[object Array]') {
+    return reject(new TypeError('must be an array'));
+  }
+
+  var len = iterable.length;
+  var called = false;
+  if (!len) {
+    return resolve([]);
+  }
+
+  var values = new Array(len);
+  var resolved = 0;
+  var i = -1;
+  var promise = new Promise(INTERNAL);
+  
+  while (++i < len) {
+    allResolver(iterable[i], i);
+  }
+  return promise;
+  function allResolver(value, i) {
+    resolve(value).then(resolveFromAll, function (error) {
+      if (!called) {
+        called = true;
+        handlers.reject(promise, error);
+      }
+    });
+    function resolveFromAll(outValue) {
+      values[i] = outValue;
+      if (++resolved === len & !called) {
+        called = true;
+        handlers.resolve(promise, values);
+      }
+    }
+  }
+}
+},{"./INTERNAL":47,"./handlers":49,"./promise":51,"./reject":54,"./resolve":55}],49:[function(_dereq_,module,exports){
+'use strict';
+var tryCatch = _dereq_('./tryCatch');
+var resolveThenable = _dereq_('./resolveThenable');
+var states = _dereq_('./states');
+
+exports.resolve = function (self, value) {
+  var result = tryCatch(getThen, value);
+  if (result.status === 'error') {
+    return exports.reject(self, result.value);
+  }
+  var thenable = result.value;
+
+  if (thenable) {
+    resolveThenable.safely(self, thenable);
+  } else {
+    self.state = states.FULFILLED;
+    self.outcome = value;
+    var i = -1;
+    var len = self.queue.length;
+    while (++i < len) {
+      self.queue[i].callFulfilled(value);
+    }
+  }
+  return self;
+};
+exports.reject = function (self, error) {
+  self.state = states.REJECTED;
+  self.outcome = error;
+  var i = -1;
+  var len = self.queue.length;
+  while (++i < len) {
+    self.queue[i].callRejected(error);
+  }
+  return self;
+};
+
+function getThen(obj) {
+  // Make sure we only access the accessor once as required by the spec
+  var then = obj && obj.then;
+  if (obj && typeof obj === 'object' && typeof then === 'function') {
+    return function appyThen() {
+      then.apply(obj, arguments);
+    };
+  }
+}
+
+},{"./resolveThenable":56,"./states":57,"./tryCatch":58}],50:[function(_dereq_,module,exports){
+module.exports = exports = _dereq_('./promise');
+
+exports.resolve = _dereq_('./resolve');
+exports.reject = _dereq_('./reject');
+exports.all = _dereq_('./all');
+exports.race = _dereq_('./race');
+
+},{"./all":48,"./promise":51,"./race":53,"./reject":54,"./resolve":55}],51:[function(_dereq_,module,exports){
+'use strict';
+
+var unwrap = _dereq_('./unwrap');
+var INTERNAL = _dereq_('./INTERNAL');
+var resolveThenable = _dereq_('./resolveThenable');
+var states = _dereq_('./states');
+var QueueItem = _dereq_('./queueItem');
+
+module.exports = Promise;
+function Promise(resolver) {
+  if (!(this instanceof Promise)) {
+    return new Promise(resolver);
+  }
+  if (typeof resolver !== 'function') {
+    throw new TypeError('resolver must be a function');
+  }
+  this.state = states.PENDING;
+  this.queue = [];
+  this.outcome = void 0;
+  if (resolver !== INTERNAL) {
+    resolveThenable.safely(this, resolver);
+  }
+}
+
+Promise.prototype['catch'] = function (onRejected) {
+  return this.then(null, onRejected);
+};
+Promise.prototype.then = function (onFulfilled, onRejected) {
+  if (typeof onFulfilled !== 'function' && this.state === states.FULFILLED ||
+    typeof onRejected !== 'function' && this.state === states.REJECTED) {
+    return this;
+  }
+  var promise = new Promise(INTERNAL);
+  if (this.state !== states.PENDING) {
+    var resolver = this.state === states.FULFILLED ? onFulfilled : onRejected;
+    unwrap(promise, resolver, this.outcome);
+  } else {
+    this.queue.push(new QueueItem(promise, onFulfilled, onRejected));
+  }
+
+  return promise;
+};
+
+},{"./INTERNAL":47,"./queueItem":52,"./resolveThenable":56,"./states":57,"./unwrap":59}],52:[function(_dereq_,module,exports){
+'use strict';
+var handlers = _dereq_('./handlers');
+var unwrap = _dereq_('./unwrap');
+
+module.exports = QueueItem;
+function QueueItem(promise, onFulfilled, onRejected) {
+  this.promise = promise;
+  if (typeof onFulfilled === 'function') {
+    this.onFulfilled = onFulfilled;
+    this.callFulfilled = this.otherCallFulfilled;
+  }
+  if (typeof onRejected === 'function') {
+    this.onRejected = onRejected;
+    this.callRejected = this.otherCallRejected;
+  }
+}
+QueueItem.prototype.callFulfilled = function (value) {
+  handlers.resolve(this.promise, value);
+};
+QueueItem.prototype.otherCallFulfilled = function (value) {
+  unwrap(this.promise, this.onFulfilled, value);
+};
+QueueItem.prototype.callRejected = function (value) {
+  handlers.reject(this.promise, value);
+};
+QueueItem.prototype.otherCallRejected = function (value) {
+  unwrap(this.promise, this.onRejected, value);
+};
+
+},{"./handlers":49,"./unwrap":59}],53:[function(_dereq_,module,exports){
+'use strict';
+var Promise = _dereq_('./promise');
+var reject = _dereq_('./reject');
+var resolve = _dereq_('./resolve');
+var INTERNAL = _dereq_('./INTERNAL');
+var handlers = _dereq_('./handlers');
+module.exports = race;
+function race(iterable) {
+  if (Object.prototype.toString.call(iterable) !== '[object Array]') {
+    return reject(new TypeError('must be an array'));
+  }
+
+  var len = iterable.length;
+  var called = false;
+  if (!len) {
+    return resolve([]);
+  }
+
+  var i = -1;
+  var promise = new Promise(INTERNAL);
+
+  while (++i < len) {
+    resolver(iterable[i]);
+  }
+  return promise;
+  function resolver(value) {
+    resolve(value).then(function (response) {
+      if (!called) {
+        called = true;
+        handlers.resolve(promise, response);
+      }
+    }, function (error) {
+      if (!called) {
+        called = true;
+        handlers.reject(promise, error);
+      }
+    });
+  }
+}
+
+},{"./INTERNAL":47,"./handlers":49,"./promise":51,"./reject":54,"./resolve":55}],54:[function(_dereq_,module,exports){
+'use strict';
+
+var Promise = _dereq_('./promise');
+var INTERNAL = _dereq_('./INTERNAL');
+var handlers = _dereq_('./handlers');
+module.exports = reject;
+
+function reject(reason) {
+	var promise = new Promise(INTERNAL);
+	return handlers.reject(promise, reason);
+}
+},{"./INTERNAL":47,"./handlers":49,"./promise":51}],55:[function(_dereq_,module,exports){
+'use strict';
+
+var Promise = _dereq_('./promise');
+var INTERNAL = _dereq_('./INTERNAL');
+var handlers = _dereq_('./handlers');
+module.exports = resolve;
+
+var FALSE = handlers.resolve(new Promise(INTERNAL), false);
+var NULL = handlers.resolve(new Promise(INTERNAL), null);
+var UNDEFINED = handlers.resolve(new Promise(INTERNAL), void 0);
+var ZERO = handlers.resolve(new Promise(INTERNAL), 0);
+var EMPTYSTRING = handlers.resolve(new Promise(INTERNAL), '');
+
+function resolve(value) {
+  if (value) {
+    if (value instanceof Promise) {
+      return value;
+    }
+    return handlers.resolve(new Promise(INTERNAL), value);
+  }
+  var valueType = typeof value;
+  switch (valueType) {
+    case 'boolean':
+      return FALSE;
+    case 'undefined':
+      return UNDEFINED;
+    case 'object':
+      return NULL;
+    case 'number':
+      return ZERO;
+    case 'string':
+      return EMPTYSTRING;
+  }
+}
+},{"./INTERNAL":47,"./handlers":49,"./promise":51}],56:[function(_dereq_,module,exports){
+'use strict';
+var handlers = _dereq_('./handlers');
+var tryCatch = _dereq_('./tryCatch');
+function safelyResolveThenable(self, thenable) {
+  // Either fulfill, reject or reject with error
+  var called = false;
+  function onError(value) {
+    if (called) {
+      return;
+    }
+    called = true;
+    handlers.reject(self, value);
+  }
+
+  function onSuccess(value) {
+    if (called) {
+      return;
+    }
+    called = true;
+    handlers.resolve(self, value);
+  }
+
+  function tryToUnwrap() {
+    thenable(onSuccess, onError);
+  }
+  
+  var result = tryCatch(tryToUnwrap);
+  if (result.status === 'error') {
+    onError(result.value);
+  }
+}
+exports.safely = safelyResolveThenable;
+},{"./handlers":49,"./tryCatch":58}],57:[function(_dereq_,module,exports){
+// Lazy man's symbols for states
+
+exports.REJECTED = ['REJECTED'];
+exports.FULFILLED = ['FULFILLED'];
+exports.PENDING = ['PENDING'];
+
+},{}],58:[function(_dereq_,module,exports){
+'use strict';
+
+module.exports = tryCatch;
+
+function tryCatch(func, value) {
+  var out = {};
+  try {
+    out.value = func(value);
+    out.status = 'success';
+  } catch (e) {
+    out.status = 'error';
+    out.value = e;
+  }
+  return out;
+}
+},{}],59:[function(_dereq_,module,exports){
+'use strict';
+
+var immediate = _dereq_('immediate');
+var handlers = _dereq_('./handlers');
+module.exports = unwrap;
+
+function unwrap(promise, func, value) {
+  immediate(function () {
+    var returnValue;
+    try {
+      returnValue = func(value);
+    } catch (e) {
+      return handlers.reject(promise, e);
+    }
+    if (returnValue === promise) {
+      handlers.reject(promise, new TypeError('Cannot resolve promise with itself'));
+    } else {
+      handlers.resolve(promise, returnValue);
+    }
+  });
+}
+},{"./handlers":49,"immediate":43}],60:[function(_dereq_,module,exports){
 /**
  * Helpers.
  */
@@ -5769,7 +6022,10 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],53:[function(_dereq_,module,exports){
+},{}],61:[function(_dereq_,module,exports){
+module.exports = typeof Promise === 'function' ? Promise : _dereq_('lie');
+
+},{"lie":50}],62:[function(_dereq_,module,exports){
 (function (global){
 /**
  * JSON parse.
@@ -5804,7 +6060,7 @@ module.exports = function parsejson(data) {
   }
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],54:[function(_dereq_,module,exports){
+},{}],63:[function(_dereq_,module,exports){
 /**
  * Compiles a querystring
  * Returns string representation of the object
@@ -5843,7 +6099,7 @@ exports.decode = function(qs){
   return qry;
 };
 
-},{}],55:[function(_dereq_,module,exports){
+},{}],64:[function(_dereq_,module,exports){
 /**
  * Parses an URI
  *
@@ -5884,7 +6140,7 @@ module.exports = function parseuri(str) {
     return uri;
 };
 
-},{}],56:[function(_dereq_,module,exports){
+},{}],65:[function(_dereq_,module,exports){
 (function (global){
 "use strict";
 
@@ -5976,324 +6232,15 @@ module.exports = {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],57:[function(_dereq_,module,exports){
-(function (global){
-if (typeof global.Promise === 'function') {
-  module.exports = global.Promise;
-} else {
-  module.exports = _dereq_('bluebird');
-}
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"bluebird":61}],58:[function(_dereq_,module,exports){
-'use strict';
-
-module.exports = INTERNAL;
-
-function INTERNAL() {}
-},{}],59:[function(_dereq_,module,exports){
-'use strict';
-var Promise = _dereq_('./promise');
-var reject = _dereq_('./reject');
-var resolve = _dereq_('./resolve');
-var INTERNAL = _dereq_('./INTERNAL');
-var handlers = _dereq_('./handlers');
-var noArray = reject(new TypeError('must be an array'));
-module.exports = function all(iterable) {
-  if (Object.prototype.toString.call(iterable) !== '[object Array]') {
-    return noArray;
-  }
-
-  var len = iterable.length;
-  var called = false;
-  if (!len) {
-    return resolve([]);
-  }
-
-  var values = new Array(len);
-  var resolved = 0;
-  var i = -1;
-  var promise = new Promise(INTERNAL);
-  
-  while (++i < len) {
-    allResolver(iterable[i], i);
-  }
-  return promise;
-  function allResolver(value, i) {
-    resolve(value).then(resolveFromAll, function (error) {
-      if (!called) {
-        called = true;
-        handlers.reject(promise, error);
-      }
-    });
-    function resolveFromAll(outValue) {
-      values[i] = outValue;
-      if (++resolved === len & !called) {
-        called = true;
-        handlers.resolve(promise, values);
-      }
-    }
-  }
-};
-},{"./INTERNAL":58,"./handlers":60,"./promise":62,"./reject":64,"./resolve":65}],60:[function(_dereq_,module,exports){
-'use strict';
-var tryCatch = _dereq_('./tryCatch');
-var resolveThenable = _dereq_('./resolveThenable');
-var states = _dereq_('./states');
-
-exports.resolve = function (self, value) {
-  var result = tryCatch(getThen, value);
-  if (result.status === 'error') {
-    return exports.reject(self, result.value);
-  }
-  var thenable = result.value;
-
-  if (thenable) {
-    resolveThenable.safely(self, thenable);
-  } else {
-    self.state = states.FULFILLED;
-    self.outcome = value;
-    var i = -1;
-    var len = self.queue.length;
-    while (++i < len) {
-      self.queue[i].callFulfilled(value);
-    }
-  }
-  return self;
-};
-exports.reject = function (self, error) {
-  self.state = states.REJECTED;
-  self.outcome = error;
-  var i = -1;
-  var len = self.queue.length;
-  while (++i < len) {
-    self.queue[i].callRejected(error);
-  }
-  return self;
-};
-
-function getThen(obj) {
-  // Make sure we only access the accessor once as required by the spec
-  var then = obj && obj.then;
-  if (obj && typeof obj === 'object' && typeof then === 'function') {
-    return function appyThen() {
-      then.apply(obj, arguments);
-    };
-  }
-}
-},{"./resolveThenable":66,"./states":67,"./tryCatch":68}],61:[function(_dereq_,module,exports){
-module.exports = exports = _dereq_('./promise');
-
-exports.resolve = _dereq_('./resolve');
-exports.reject = _dereq_('./reject');
-exports.all = _dereq_('./all');
-},{"./all":59,"./promise":62,"./reject":64,"./resolve":65}],62:[function(_dereq_,module,exports){
-'use strict';
-
-var unwrap = _dereq_('./unwrap');
-var INTERNAL = _dereq_('./INTERNAL');
-var resolveThenable = _dereq_('./resolveThenable');
-var states = _dereq_('./states');
-var QueueItem = _dereq_('./queueItem');
-
-module.exports = Promise;
-function Promise(resolver) {
-  if (!(this instanceof Promise)) {
-    return new Promise(resolver);
-  }
-  if (typeof resolver !== 'function') {
-    throw new TypeError('reslover must be a function');
-  }
-  this.state = states.PENDING;
-  this.queue = [];
-  this.outcome = void 0;
-  if (resolver !== INTERNAL) {
-    resolveThenable.safely(this, resolver);
-  }
-}
-
-Promise.prototype['catch'] = function (onRejected) {
-  return this.then(null, onRejected);
-};
-Promise.prototype.then = function (onFulfilled, onRejected) {
-  if (typeof onFulfilled !== 'function' && this.state === states.FULFILLED ||
-    typeof onRejected !== 'function' && this.state === states.REJECTED) {
-    return this;
-  }
-  var promise = new Promise(INTERNAL);
-
-  
-  if (this.state !== states.PENDING) {
-    var resolver = this.state === states.FULFILLED ? onFulfilled: onRejected;
-    unwrap(promise, resolver, this.outcome);
-  } else {
-    this.queue.push(new QueueItem(promise, onFulfilled, onRejected));
-  }
-
-  return promise;
-};
-
-},{"./INTERNAL":58,"./queueItem":63,"./resolveThenable":66,"./states":67,"./unwrap":69}],63:[function(_dereq_,module,exports){
-'use strict';
-var handlers = _dereq_('./handlers');
-var unwrap = _dereq_('./unwrap');
-
-module.exports = QueueItem;
-function QueueItem(promise, onFulfilled, onRejected) {
-  this.promise = promise;
-  if (typeof onFulfilled === 'function') {
-    this.onFulfilled = onFulfilled;
-    this.callFulfilled = this.otherCallFulfilled;
-  }
-  if (typeof onRejected === 'function') {
-    this.onRejected = onRejected;
-    this.callRejected = this.otherCallRejected;
-  }
-}
-QueueItem.prototype.callFulfilled = function (value) {
-  handlers.resolve(this.promise, value);
-};
-QueueItem.prototype.otherCallFulfilled = function (value) {
-  unwrap(this.promise, this.onFulfilled, value);
-};
-QueueItem.prototype.callRejected = function (value) {
-  handlers.reject(this.promise, value);
-};
-QueueItem.prototype.otherCallRejected = function (value) {
-  unwrap(this.promise, this.onRejected, value);
-};
-},{"./handlers":60,"./unwrap":69}],64:[function(_dereq_,module,exports){
-'use strict';
-
-var Promise = _dereq_('./promise');
-var INTERNAL = _dereq_('./INTERNAL');
-var handlers = _dereq_('./handlers');
-module.exports = reject;
-
-function reject(reason) {
-	var promise = new Promise(INTERNAL);
-	return handlers.reject(promise, reason);
-}
-},{"./INTERNAL":58,"./handlers":60,"./promise":62}],65:[function(_dereq_,module,exports){
-'use strict';
-
-var Promise = _dereq_('./promise');
-var INTERNAL = _dereq_('./INTERNAL');
-var handlers = _dereq_('./handlers');
-module.exports = resolve;
-
-var FALSE = handlers.resolve(new Promise(INTERNAL), false);
-var NULL = handlers.resolve(new Promise(INTERNAL), null);
-var UNDEFINED = handlers.resolve(new Promise(INTERNAL), void 0);
-var ZERO = handlers.resolve(new Promise(INTERNAL), 0);
-var EMPTYSTRING = handlers.resolve(new Promise(INTERNAL), '');
-
-function resolve(value) {
-  if (value) {
-    if (value instanceof Promise) {
-      return value;
-    }
-    return handlers.resolve(new Promise(INTERNAL), value);
-  }
-  var valueType = typeof value;
-  switch (valueType) {
-    case 'boolean':
-      return FALSE;
-    case 'undefined':
-      return UNDEFINED;
-    case 'object':
-      return NULL;
-    case 'number':
-      return ZERO;
-    case 'string':
-      return EMPTYSTRING;
-  }
-}
-},{"./INTERNAL":58,"./handlers":60,"./promise":62}],66:[function(_dereq_,module,exports){
-'use strict';
-var handlers = _dereq_('./handlers');
-var tryCatch = _dereq_('./tryCatch');
-function safelyResolveThenable(self, thenable) {
-  // Either fulfill, reject or reject with error
-  var called = false;
-  function onError(value) {
-    if (called) {
-      return;
-    }
-    called = true;
-    handlers.reject(self, value);
-  }
-
-  function onSuccess(value) {
-    if (called) {
-      return;
-    }
-    called = true;
-    handlers.resolve(self, value);
-  }
-
-  function tryToUnwrap() {
-    thenable(onSuccess, onError);
-  }
-  
-  var result = tryCatch(tryToUnwrap);
-  if (result.status === 'error') {
-    onError(result.value);
-  }
-}
-exports.safely = safelyResolveThenable;
-},{"./handlers":60,"./tryCatch":68}],67:[function(_dereq_,module,exports){
-// Lazy man's symbols for states
-
-exports.REJECTED = ['REJECTED'];
-exports.FULFILLED = ['FULFILLED'];
-exports.PENDING = ['PENDING'];
-},{}],68:[function(_dereq_,module,exports){
-'use strict';
-
-module.exports = tryCatch;
-
-function tryCatch(func, value) {
-  var out = {};
-  try {
-    out.value = func(value);
-    out.status = 'success';
-  } catch (e) {
-    out.status = 'error';
-    out.value = e;
-  }
-  return out;
-}
-},{}],69:[function(_dereq_,module,exports){
-'use strict';
-
-var immediate = _dereq_('immediate');
-var handlers = _dereq_('./handlers');
-module.exports = unwrap;
-
-function unwrap(promise, func, value) {
-  immediate(function () {
-    var returnValue;
-    try {
-      returnValue = func(value);
-    } catch (e) {
-      return handlers.reject(promise, e);
-    }
-    if (returnValue === promise) {
-      handlers.reject(promise, new TypeError('Cannot resolve promise with itself'));
-    } else {
-      handlers.resolve(promise, returnValue);
-    }
-  });
-}
-},{"./handlers":60,"immediate":43}],70:[function(_dereq_,module,exports){
+},{}],66:[function(_dereq_,module,exports){
 'use strict';
 
 // allow external plugins to require('pouchdb/extras/promise')
 module.exports = _dereq_('../lib/extras/promise');
-},{"../lib/extras/promise":71}],71:[function(_dereq_,module,exports){
+},{"../lib/extras/promise":67}],67:[function(_dereq_,module,exports){
 'use strict';
 
-function _interopDefault (ex) { return 'default' in ex ? ex['default'] : ex; }
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var lie = _interopDefault(_dereq_('lie'));
 
@@ -6301,80 +6248,7 @@ var lie = _interopDefault(_dereq_('lie'));
 var PouchPromise = typeof Promise === 'function' ? Promise : lie;
 
 module.exports = PouchPromise;
-},{"lie":73}],72:[function(_dereq_,module,exports){
-(function (global){
-'use strict';
-var Mutation = global.MutationObserver || global.WebKitMutationObserver;
-
-var scheduleDrain;
-
-{
-  if (Mutation) {
-    var called = 0;
-    var observer = new Mutation(nextTick);
-    var element = global.document.createTextNode('');
-    observer.observe(element, {
-      characterData: true
-    });
-    scheduleDrain = function () {
-      element.data = (called = ++called % 2);
-    };
-  } else if (!global.setImmediate && typeof global.MessageChannel !== 'undefined') {
-    var channel = new global.MessageChannel();
-    channel.port1.onmessage = nextTick;
-    scheduleDrain = function () {
-      channel.port2.postMessage(0);
-    };
-  } else if ('document' in global && 'onreadystatechange' in global.document.createElement('script')) {
-    scheduleDrain = function () {
-
-      // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-      // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
-      var scriptEl = global.document.createElement('script');
-      scriptEl.onreadystatechange = function () {
-        nextTick();
-
-        scriptEl.onreadystatechange = null;
-        scriptEl.parentNode.removeChild(scriptEl);
-        scriptEl = null;
-      };
-      global.document.documentElement.appendChild(scriptEl);
-    };
-  } else {
-    scheduleDrain = function () {
-      setTimeout(nextTick, 0);
-    };
-  }
-}
-
-var draining;
-var queue = [];
-//named nextTick for less confusing stack traces
-function nextTick() {
-  draining = true;
-  var i, oldQueue;
-  var len = queue.length;
-  while (len) {
-    oldQueue = queue;
-    queue = [];
-    i = -1;
-    while (++i < len) {
-      oldQueue[i]();
-    }
-    len = queue.length;
-  }
-  draining = false;
-}
-
-module.exports = immediate;
-function immediate(task) {
-  if (queue.push(task) === 1 && !draining) {
-    scheduleDrain();
-  }
-}
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],73:[function(_dereq_,module,exports){
+},{"lie":68}],68:[function(_dereq_,module,exports){
 'use strict';
 var immediate = _dereq_('immediate');
 
@@ -6629,7 +6503,7 @@ function race(iterable) {
   }
 }
 
-},{"immediate":72}],74:[function(_dereq_,module,exports){
+},{"immediate":43}],69:[function(_dereq_,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -6689,7 +6563,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],75:[function(_dereq_,module,exports){
+},{}],70:[function(_dereq_,module,exports){
 (function (global){
 /*! https://mths.be/utf8js v2.0.0 by @mathias */
 ;(function(root) {
@@ -6937,7 +6811,7 @@ process.umask = function() { return 0; };
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],76:[function(_dereq_,module,exports){
+},{}],71:[function(_dereq_,module,exports){
 'use strict';
 
 var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_'.split('')

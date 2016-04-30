@@ -1,6 +1,6 @@
 {
   "name": "socket-pouch",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "PouchDB over websockets",
   "main": "server/index.js",
   "repository": {
@@ -75,5 +75,10 @@
     "./lib/client/binaryStringToBlobOrBuffer.js": "./lib/client/binaryStringToBlobOrBuffer-browser.js",
     "./lib/client/readAsBinaryString.js": "./lib/client/readAsBinaryString-browser.js"
   },
-  "files": ["lib", "client", "server", "dist"]
+  "files": [
+    "lib",
+    "client",
+    "server",
+    "dist"
+  ]
 }
