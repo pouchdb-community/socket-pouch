@@ -6,16 +6,16 @@ socket-pouch [![Build Status](https://travis-ci.org/nolanlawson/socket-pouch.svg
 var db = new PouchDB('mydb', {adapter: 'socket', url: 'ws://localhost:80'});
 ```
 
-SocketPouch a custom PouchDB adapter that proxies all PouchDB API calls to another PouchDB running on the server in Node.js. The communication mechanism is [Engine.io](https://github.com/Automattic/engine.io), the famous core of [Socket.io](http://socket.io/).
+A PouchDB adapter that proxies all database API calls to another PouchDB running on the server in Node.js. The communication mechanism is [Engine.io](https://github.com/Automattic/engine.io), the famous core of [Socket.io](http://socket.io/).
 
 This means that instead of syncing over HTTP, SocketPouch syncs over WebSockets. Thanks to Engine.io, it falls back to XHR polling in browsers that don't support WebSockets.
 
-SocketPouch has two parts:
+The socket-pouch library has two parts:
 
 * **A Node.js server**, which can create local PouchDBs or proxy to a remote CouchDB.
 * **A JavaScript client**, which can run in Node.js or the browser.
 
-SocketPouch passes [the full PouchDB test suite](https://travis-ci.org/nolanlawson/socket-pouch). It requires PouchDB 5.0.0+.
+This adapter passes [the full PouchDB test suite](https://travis-ci.org/nolanlawson/socket-pouch). It requires PouchDB 5.0.0+.
 
 Usage
 ---
@@ -80,7 +80,7 @@ socketPouchServer.listen(80, {}, function () {
 
 * **port**: the port to listen on. You should probably use 80 or 443 if you plan on running this in production; most browsers are finicky about other ports. 8080 may work in Chrome during debugging.
 * **options**: (optional) options object
-  * **remoteUrl**: tells SocketPouch to act as a proxy for a remote CouchDB at the given URL (rather than creating local PouchDB databases)
+  * **remoteUrl**: tells socket-pouch to act as a proxy for a remote CouchDB at the given URL (rather than creating local PouchDB databases)
   * **pouchCreator**: alternatively, you can supply a custom function that takes a string and returns any PouchDB object however you like. (See examples below.) 
   * **socketOptions**: (optional) options passed verbatim to Engine.io. See [their documentation](https://github.com/Automattic/engine.io/#methods) for details.
 * **callback**: (optional) called when the server has started
