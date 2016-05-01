@@ -6,9 +6,9 @@ socket-pouch [![Build Status](https://travis-ci.org/nolanlawson/socket-pouch.svg
 var db = new PouchDB('mydb', {adapter: 'socket', url: 'ws://localhost:80'});
 ```
 
-A PouchDB adapter that proxies all database API calls to another PouchDB running on the server in Node.js. The communication mechanism is [Engine.io](https://github.com/Automattic/engine.io), the famous core of [Socket.io](http://socket.io/).
+Adapter plugin that proxies all PouchDB API calls to another PouchDB running on the server in Node.js. The communication mechanism is [Engine.io](https://github.com/Automattic/engine.io), the famous core of [Socket.io](http://socket.io/).
 
-This means that instead of syncing over HTTP, SocketPouch syncs over WebSockets. Thanks to Engine.io, it falls back to XHR polling in browsers that don't support WebSockets.
+This means that instead of syncing over HTTP, socket-pouch syncs over WebSockets. Thanks to Engine.io, it falls back to XHR polling in browsers that don't support WebSockets.
 
 The socket-pouch library has two parts:
 
