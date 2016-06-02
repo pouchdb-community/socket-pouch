@@ -131,6 +131,18 @@ socketPouchServer.listen(80, {
 });
 ```
 
+#### socketPouchServer.attach(server [, options] [, callback])
+
+##### Arguments
+
+* **server**: the engine.io server to attach to. This can be created in any of the three ways described in [their documentation](https://github.com/socketio/engine.io#a-listening-on-a-port).
+* **options**: (optional) options object
+  * **remoteUrl**: tells socket-pouch to act as a proxy for a remote CouchDB at the given URL (rather than creating local PouchDB databases)
+  * **pouchCreator**: alternatively, you can supply a custom function that takes a string and returns any PouchDB object however you like. (See examples below.) 
+  * **socketOptions**: (optional) options passed verbatim to Engine.io. See [their documentation](https://github.com/Automattic/engine.io/#methods) for details.
+* **callback**: (optional) called when the server has started
+
+
 ### Client
 
 ```js
