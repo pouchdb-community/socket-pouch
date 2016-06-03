@@ -142,6 +142,16 @@ socketPouchServer.listen(80, {
   * **socketOptions**: (optional) options passed verbatim to Engine.io. See [their documentation](https://github.com/Automattic/engine.io/#methods) for details.
 * **callback**: (optional) called when the server has started
 
+```js
+var engine = require('engine.io');
+var engineServer = engine.listen(80);
+
+var socketPouchServer = require('socket-pouch/server');
+socketPouchServer.attach(engineServer);
+```
+
+All options and callbacks available on `listen` are available on `attach`.
+
 
 ### Client
 
