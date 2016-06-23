@@ -133,7 +133,7 @@ var readAttachmentsAsBlobOrBuffer = clientUtils.readAttachmentsAsBlobOrBuffer;
 var adapterFun = clientUtils.adapterFun;
 var readAsBinaryString = _dereq_('./readAsBinaryString');
 var isBinaryObject = _dereq_('../shared/isBinaryObject');
-var Promise = _dereq_('pouchdb/extras/promise');
+var Promise = _dereq_('pouchdb-promise');
 var base64 = _dereq_('./base64');
 
 var instances = {};
@@ -724,7 +724,6 @@ function SocketPouch(opts, callback) {
           return callback(err);
         }
         api.emit('destroyed');
-        api.constructor.emit('destroyed', api._name);
         callback(null, res);
       });
     });
@@ -744,7 +743,7 @@ if (typeof window !== 'undefined' && window.PouchDB) {
 }
 
 }).call(this,_dereq_('_process'))
-},{"../shared/buffer":11,"../shared/errors":13,"../shared/isBinaryObject":14,"../shared/utils":17,"./../shared/uuid":18,"./base64":3,"./readAsBinaryString":9,"./utils":10,"_process":69,"blob-util":22,"debug":27,"engine.io-client":29,"pouchdb/extras/promise":66}],9:[function(_dereq_,module,exports){
+},{"../shared/buffer":11,"../shared/errors":13,"../shared/isBinaryObject":14,"../shared/utils":17,"./../shared/uuid":18,"./base64":3,"./readAsBinaryString":9,"./utils":10,"_process":68,"blob-util":22,"debug":27,"engine.io-client":29,"pouchdb-promise":66}],9:[function(_dereq_,module,exports){
 'use strict';
 
 var arrayBufferToBinaryString = _dereq_('./arrayBufferToBinaryString');
@@ -884,7 +883,7 @@ exports.adapterFun = function adapterFun(name, callback) {
   }));
 };
 }).call(this,_dereq_('_process'))
-},{"../shared/utils":17,"./base64StringToBlobOrBuffer":4,"_process":69,"debug":27}],11:[function(_dereq_,module,exports){
+},{"../shared/utils":17,"./base64StringToBlobOrBuffer":4,"_process":68,"debug":27}],11:[function(_dereq_,module,exports){
 // hey guess what, we don't need this in the browser
 module.exports = {};
 },{}],12:[function(_dereq_,module,exports){
@@ -1249,7 +1248,7 @@ module.exports = function clone(object) {
 (function (process){
 'use strict';
 
-var Promise = _dereq_('pouchdb/extras/promise');
+var Promise = _dereq_('pouchdb-promise');
 var buffer = _dereq_('./buffer');
 
 exports.lastIndexOf = function lastIndexOf(str, char) {
@@ -1374,7 +1373,7 @@ exports.readAsBinaryString = binUtil.readAsBinaryString;
 exports.binaryStringToArrayBuffer = binUtil.binaryStringToArrayBuffer;
 exports.arrayBufferToBinaryString = binUtil.arrayBufferToBinaryString;
 }).call(this,_dereq_('_process'))
-},{"./buffer":11,"./parse-message":15,"./pouchdb-clone":16,"_process":69,"inherits":45,"pouchdb-binary-util":65,"pouchdb/extras/promise":66}],18:[function(_dereq_,module,exports){
+},{"./buffer":11,"./parse-message":15,"./pouchdb-clone":16,"_process":68,"inherits":45,"pouchdb-binary-util":65,"pouchdb-promise":66}],18:[function(_dereq_,module,exports){
 "use strict";
 
 // BEGIN Math.uuid.js
@@ -2655,7 +2654,7 @@ function Socket(uri, opts){
   this.cert = opts.cert || null;
   this.ca = opts.ca || null;
   this.ciphers = opts.ciphers || null;
-  this.rejectUnauthorized = opts.rejectUnauthorized === undefined ? null : opts.rejectUnauthorized;
+  this.rejectUnauthorized = opts.rejectUnauthorized === undefined ? true : opts.rejectUnauthorized;
 
   // other options for Node.js client
   var freeGlobal = typeof global == 'object' && global;
@@ -4406,7 +4405,7 @@ Polling.prototype.uri = function(){
   return schema + '://' + (ipv6 ? '[' + this.hostname + ']' : this.hostname) + port + this.path + query;
 };
 
-},{"../transport":32,"component-inherit":26,"debug":27,"engine.io-parser":39,"parseqs":63,"xmlhttprequest-ssl":38,"yeast":71}],37:[function(_dereq_,module,exports){
+},{"../transport":32,"component-inherit":26,"debug":27,"engine.io-parser":39,"parseqs":63,"xmlhttprequest-ssl":38,"yeast":70}],37:[function(_dereq_,module,exports){
 (function (global){
 /**
  * Module dependencies.
@@ -4698,7 +4697,7 @@ WS.prototype.check = function(){
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../transport":32,"component-inherit":26,"debug":27,"engine.io-parser":39,"parseqs":63,"ws":24,"yeast":71}],38:[function(_dereq_,module,exports){
+},{"../transport":32,"component-inherit":26,"debug":27,"engine.io-parser":39,"parseqs":63,"ws":24,"yeast":70}],38:[function(_dereq_,module,exports){
 // browser shim for xmlhttprequest module
 var hasCORS = _dereq_('has-cors');
 
@@ -5334,7 +5333,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./keys":40,"after":19,"arraybuffer.slice":20,"base64-arraybuffer":21,"blob":23,"has-binary":41,"utf8":70}],40:[function(_dereq_,module,exports){
+},{"./keys":40,"after":19,"arraybuffer.slice":20,"base64-arraybuffer":21,"blob":23,"has-binary":41,"utf8":69}],40:[function(_dereq_,module,exports){
 
 /**
  * Gets the keys for an object.
@@ -6235,11 +6234,6 @@ module.exports = {
 },{}],66:[function(_dereq_,module,exports){
 'use strict';
 
-// allow external plugins to require('pouchdb/extras/promise')
-module.exports = _dereq_('../lib/extras/promise');
-},{"../lib/extras/promise":67}],67:[function(_dereq_,module,exports){
-'use strict';
-
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var lie = _interopDefault(_dereq_('lie'));
@@ -6248,7 +6242,7 @@ var lie = _interopDefault(_dereq_('lie'));
 var PouchPromise = typeof Promise === 'function' ? Promise : lie;
 
 module.exports = PouchPromise;
-},{"lie":68}],68:[function(_dereq_,module,exports){
+},{"lie":67}],67:[function(_dereq_,module,exports){
 'use strict';
 var immediate = _dereq_('immediate');
 
@@ -6261,7 +6255,7 @@ var REJECTED = ['REJECTED'];
 var FULFILLED = ['FULFILLED'];
 var PENDING = ['PENDING'];
 
-module.exports = exports = Promise;
+module.exports = Promise;
 
 function Promise(resolver) {
   if (typeof resolver !== 'function') {
@@ -6415,7 +6409,7 @@ function tryCatch(func, value) {
   return out;
 }
 
-exports.resolve = resolve;
+Promise.resolve = resolve;
 function resolve(value) {
   if (value instanceof this) {
     return value;
@@ -6423,13 +6417,13 @@ function resolve(value) {
   return handlers.resolve(new this(INTERNAL), value);
 }
 
-exports.reject = reject;
+Promise.reject = reject;
 function reject(reason) {
   var promise = new this(INTERNAL);
   return handlers.reject(promise, reason);
 }
 
-exports.all = all;
+Promise.all = all;
 function all(iterable) {
   var self = this;
   if (Object.prototype.toString.call(iterable) !== '[object Array]') {
@@ -6468,7 +6462,7 @@ function all(iterable) {
   }
 }
 
-exports.race = race;
+Promise.race = race;
 function race(iterable) {
   var self = this;
   if (Object.prototype.toString.call(iterable) !== '[object Array]') {
@@ -6503,7 +6497,7 @@ function race(iterable) {
   }
 }
 
-},{"immediate":43}],69:[function(_dereq_,module,exports){
+},{"immediate":43}],68:[function(_dereq_,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -6563,7 +6557,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],70:[function(_dereq_,module,exports){
+},{}],69:[function(_dereq_,module,exports){
 (function (global){
 /*! https://mths.be/utf8js v2.0.0 by @mathias */
 ;(function(root) {
@@ -6811,7 +6805,7 @@ process.umask = function() { return 0; };
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],71:[function(_dereq_,module,exports){
+},{}],70:[function(_dereq_,module,exports){
 'use strict';
 
 var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_'.split('')
