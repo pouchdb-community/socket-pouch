@@ -3,7 +3,8 @@
 
 var SocketPouch = require('../lib/client');
 
-window.PouchDB = require('pouchdb');
+window.PouchDB = require('pouchdb')
+  .plugin(require('pouchdb-legacy-utils'));
 
 window.PouchDB.adapter('socket', SocketPouch);
 window.PouchDB.preferredAdapters = ['socket'];
