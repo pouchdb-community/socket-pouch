@@ -42,9 +42,9 @@
     "eval": "^0.1.0",
     "inherits": "^2.0.1",
     "lie": "^2.6.0",
-    "pouchdb": "^5.0.0",
+    "pouchdb": "^6.0.0",
     "pouchdb-binary-util": "^1.0.0",
-    "pouchdb-promise": "5.4.4"
+    "pouchdb-promise": "^6.0.7"
   },
   "devDependencies": {
     "browserify": "^9.0.8",
