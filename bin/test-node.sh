@@ -25,7 +25,7 @@ mocha \
   --require=./test/node.setup.js \
   --grep=$GREP \
   $INVERT_ARG \
-  test/pouchdb/{integration,mapreduce}/*
+  test/pouchdb/{integration,mapreduce}/test.*.js
 
 EXIT_STATUS=$?
 if [[ ! -z $DEV_SERVER_PID ]]; then
