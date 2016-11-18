@@ -4291,7 +4291,7 @@ adapters.forEach(function (adapters) {
 
 
     it('4094 cant fetch server uuid', function (done) {
-
+      this.timeout(120000);
       var db = new PouchDB(dbs.name);
       var remote = new PouchDB(dbs.remote);
 
