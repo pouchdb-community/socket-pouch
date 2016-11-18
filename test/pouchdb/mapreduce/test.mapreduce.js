@@ -1040,6 +1040,7 @@ function tests(suiteName, dbName, dbType, viewType) {
         }).then(function (res) {
           res.rows.should.have.length(1, 'Correctly reduced returned rows');
           should.not.exist(res.rows[0].key, 'Correct, non-existing key');
+          res.rows[0].value.should = Object.prototype.should;
           res.rows[0].value.should.have.length(5);
           res.rows[0].value.should.include('foobarbaz');
           res.rows[0].value.should.include('foobar'); // twice
@@ -1048,11 +1049,15 @@ function tests(suiteName, dbName, dbType, viewType) {
           return db.query(queryFun, { group_level: 1, reduce: true });
         }).then(function (res) {
           res.rows.should.have.length(2, 'Correctly group reduced rows');
+          res.rows[0].key.should = Object.prototype.should;
           res.rows[0].key.should.deep.equal(['baz']);
+          res.rows[0].value.should = Object.prototype.should;
           res.rows[0].value.should.have.length(2);
           res.rows[0].value.should.include('bazbar');
           res.rows[0].value.should.include('baz');
+          res.rows[1].key.should = Object.prototype.should;
           res.rows[1].key.should.deep.equal(['foo']);
+          res.rows[1].value.should = Object.prototype.should;
           res.rows[1].value.should.have.length(3);
           res.rows[1].value.should.include('foobarbaz');
           res.rows[1].value.should.include('foobar'); // twice

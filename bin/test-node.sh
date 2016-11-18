@@ -21,7 +21,7 @@ fi
 
 mocha \
   --reporter=$REPORTER \
-  --timeout $TIMEOUT \
+  --timeout $TIMEOUT --bail \
   --require=./test/node.setup.js \
   --grep=$GREP \
   $INVERT_ARG \

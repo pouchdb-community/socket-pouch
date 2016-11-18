@@ -606,7 +606,7 @@ function tests(suiteName, dbName, dbType) {
 
     var isNode = typeof window === 'undefined';
     if (dbType === 'local' && isNode) {
-      it('#239 test memdown db', function () {
+      it.skip('#239 test memdown db', function () {
         var destroyedDBs = [];
         PouchDB.on('destroyed', function (db) {
           destroyedDBs.push(db);
