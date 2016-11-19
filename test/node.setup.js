@@ -8,6 +8,7 @@ global.PouchDB = require('pouchdb')
 global.testUtils = require('../test/pouchdb/integration/utils');
 var chai = require('chai');
 global.should = chai.should();
+global.assert = chai.assert;
 chai.use(require('chai-as-promised'));
 
 global.PouchDB.adapter('socket', SocketPouch);
