@@ -17,9 +17,10 @@
     ui: 'bdd'
   });
   var should = chai.should();
+  var assert = chai.assert;
 </script>
 <script src="./test-bundle.js"></script>
-<script src='./pouchdb/integration/utils.js'></script>
+<script src='./pouchdb/integration/utils-bundle.js'></script>
 <script src='./pouchdb/integration/test.aa.setup.js'></script>
 <script src='./pouchdb/integration/test.basics.js'></script>
 <script src='./pouchdb/integration/test.constructor.js'></script>
@@ -35,7 +36,6 @@
 <script src='./pouchdb/integration/test.retry.js'></script>
 <script src='./pouchdb/integration/test.taskqueue.js'></script>
 <script src='./pouchdb/integration/test.design_docs.js'></script>
-<script src='./pouchdb/integration/browser.info.js'></script>
 <script src='./pouchdb/integration/test.issue221.js'></script>
 <script src='./pouchdb/integration/test.issue3179.js'></script>
 <script src='./pouchdb/integration/test.issue3646.js'></script>
@@ -47,14 +47,14 @@
 <script src='./pouchdb/integration/test.uuids.js'></script>
 <script src='./pouchdb/integration/test.slash_id.js'></script>
 <script src='./pouchdb/integration/test.reserved.js'></script>
-<!-- TODO: engine.io apparently doesn't work in a web worker? -->
+<!-- web worker test makes no sense here -->
 <!--<script src='./pouchdb/integration/browser.worker.js'></script>-->
-<!-- Migration tests don't make sense -->
+<!-- migration test makes no sense here -->
 <!--<script src='./pouchdb/integration/browser.migration.js'></script>-->
 <!-- explicitly add in the mapreduce tests -->
 <script src='./pouchdb/mapreduce/test.mapreduce.js'></script>
-<script src='./pouchdb/mapreduce/test.views.js'></script>
 <script src='./pouchdb/mapreduce/test.persisted.js'></script>
+<script src='./pouchdb/mapreduce/test.views.js'></script>
 <script type="text/javascript" src="./webrunner.js"></script>
 </body>
 </html>

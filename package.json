@@ -42,13 +42,13 @@
     "eval": "^0.1.0",
     "inherits": "^2.0.1",
     "lie": "^2.6.0",
-    "pouchdb": "^5.0.0",
+    "pouchdb": "^6.0.0",
     "pouchdb-binary-util": "^1.0.0",
-    "pouchdb-promise": "5.4.4"
+    "pouchdb-promise": "^6.0.7"
   },
   "devDependencies": {
     "browserify": "^9.0.8",
-    "chai": "^2.3.0",
+    "chai": "3.5.0",
     "chai-as-promised": "^5.1.0",
     "corsproxy": "^0.2.14",
     "derequire": "^2.0.0",
@@ -58,7 +58,7 @@
     "istanbul": "^0.2.7",
     "jshint": "2.8.0",
     "mkdirp": "^0.5.0",
-    "mocha": "^2.3.3",
+    "mocha": "^2.3.1",
     "phantomjs": "^1.9.7-5",
     "pouchdb-http-proxy": "^0.10.4",
     "pouchdb-legacy-utils": "^1.0.0",
