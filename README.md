@@ -212,6 +212,7 @@ Changelog
   - Support for PouchDB 6.0.0, drop support for PouchDB <=5
 - 1.0.0
   - Initial release
+
 Building
 ----
 
