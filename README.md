@@ -205,6 +205,13 @@ Unfortuantely, not at the moment.
 
 This is a custom PouchDB adapter. Other examples of PouchDB adapters include the built-in IndexedDB, WebSQL, LevelDB, and HTTP (Couch) adapters, as well as a partial adapter written for [pouchdb-replication-stream](https://github.com/nolanlawson/pouchdb-replication-stream) and [worker-pouch](https://github.com/nolanlawson/worker-pouch), which is a fork of this repo.
 
+Changelog
+---
+
+- 2.0.0
+  - Support for PouchDB 6.0.0, drop support for PouchDB <=5
+- 1.0.0
+  - Initial release
 Building
 ----
 
@@ -243,3 +250,5 @@ You can run e.g.
     CLIENT=selenium:phantomjs npm test
 
 This will run the tests automatically and the process will exit with a 0 or a 1 when it's done. Firefox uses IndexedDB, and PhantomJS uses WebSQL.
+
+
