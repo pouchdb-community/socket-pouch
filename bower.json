@@ -1,0 +1,29 @@
+{
+  "name": "socket-pouch",
+  "version": "2.0.0",
+  "description": "Easy-to-use query language for PouchDB",
+  "homepage": "https://github.com/nolanlawson/socket-pouch",
+  "authors": [
+    "Nolan Lawson <nolan.lawson@gmail.com>"
+  ],
+  "main": "dist/socket-pouch.client.min.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "pouchdb",
+    "websocket",
+    "pouch",
+    "couchdb",
+    "plugin"
+  ],
+  "license": "Apache 2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "vendor"
+  ]
+}
