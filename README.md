@@ -34,7 +34,7 @@ socketPouchServer.listen(80);
 
 ##### In the browser
     
-When you `npm install socket-pouch`, the client JS file is available at `node_modules/socket-pouch/dist/socket-pouch.client.js`. Or you can just download it from Github above.
+When you `npm install socket-pouch`, the client JS file is available at `node_modules/socket-pouch/dist/socket-pouch.client.js`. Or use bower. `bower install socket-pouch` or you can just download it from Github above.
 
 Then include it in your HTML, after PouchDB:
 
