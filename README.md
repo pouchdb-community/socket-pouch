@@ -72,6 +72,11 @@ var socketPouchServer = require('socket-pouch/server');
 socketPouchServer.listen(80, {}, function () {
   // server started
 });
+
+//--Or--
+var http = require('http');
+var httpServer = http.createServer(...).listen(80)
+socketPouchServer.attach(httpServer, {});
 ```
 
 #### socketPouchServer.listen(port [, options] [, callback])
@@ -84,6 +89,17 @@ socketPouchServer.listen(80, {}, function () {
   * **pouchCreator**: alternatively, you can supply a custom function that takes a string and returns any PouchDB object however you like. (See examples below.) 
   * **socketOptions**: (optional) options passed verbatim to Engine.io. See [their documentation](https://github.com/Automattic/engine.io/#methods) for details.
 * **callback**: (optional) called when the server has started
+
+
+#### socketPouchServer.attach(httpServer [, options])
+
+##### Arguments
+
+* **httpServer**: a nodejs http server instance
+* **options**: (optional) options object
+  * **remoteUrl**: tells SocketPouch to act as a proxy for a remote CouchDB at the given URL (rather than creating local PouchDB databases)
+  * **pouchCreator**: alternatively, you can supply a custom function that takes a string and returns any PouchDB object however you like. (See examples below.) 
+  * **socketOptions**: (optional) options passed verbatim to Engine.io. See [their documentation](https://github.com/Automattic/engine.io/#methods) for details.
 
 Create a server which creates local PouchDBs, named by the user and placed in the current directory:
 
