@@ -81,7 +81,7 @@ socketPouchServer.listen(80, {}, function () {
 * **port**: the port to listen on. You should probably use 80 or 443 if you plan on running this in production; most browsers are finicky about other ports. 8080 may work in Chrome during debugging.
 * **options**: (optional) options object
   * **remoteUrl**: tells socket-pouch to act as a proxy for a remote CouchDB at the given URL (rather than creating local PouchDB databases)
-  * **pouchCreator**: alternatively, you can supply a custom function that takes a string and returns any PouchDB object however you like. (See examples below.) 
+  * **pouchCreator**: alternatively, you can supply a custom function that takes the database name and the socket and returns any PouchDB object however you like. (See examples below.)
   * **socketOptions**: (optional) options passed verbatim to Engine.io. See [their documentation](https://github.com/Automattic/engine.io/#methods) for details.
 * **callback**: (optional) called when the server has started
 
@@ -107,7 +107,7 @@ Create a MemDOWN-backed PouchDB server:
 
 ```js
 socketPouchServer.listen(80, {
-  pouchCreator: function (dbName) {
+  pouchCreator: function (dbName, socket) {
     return new PouchDB(dbName, {
       db: require('memdown')
     });
@@ -121,7 +121,7 @@ Alternatively, your `pouchCreator` can return a `Promise` if you want to do some
 
 ```js
 socketPouchServer.listen(80, {
-  pouchCreator: function (dbName) {
+  pouchCreator: function (dbName, socket) {
     return doSomethingAsynchronously().then(function () {
       return {
         pouch: new PouchDB('dbname')
@@ -130,6 +130,28 @@ socketPouchServer.listen(80, {
   }
 });
 ```
+
+#### socketPouchServer.attach(server [, options] [, callback])
+
+##### Arguments
+
+* **server**: the engine.io server to attach to. This can be created in any of the three ways described in [their documentation](https://github.com/socketio/engine.io#a-listening-on-a-port).
+* **options**: (optional) options object
+  * **remoteUrl**: tells socket-pouch to act as a proxy for a remote CouchDB at the given URL (rather than creating local PouchDB databases)
+  * **pouchCreator**: alternatively, you can supply a custom function that takes the database name and the socket and returns any PouchDB object however you like. (See examples below.)
+  * **socketOptions**: (optional) options passed verbatim to Engine.io. See [their documentation](https://github.com/Automattic/engine.io/#methods) for details.
+* **callback**: (optional) called when the server has started
+
+```js
+var engine = require('engine.io');
+var engineServer = engine.listen(80);
+
+var socketPouchServer = require('socket-pouch/server');
+socketPouchServer.attach(engineServer);
+```
+
+All options and callbacks available on `listen` are available on `attach`.
+
 
 ### Client
 
